@@ -12,7 +12,7 @@ function shorturl() {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
-            url: document.querySelector("#text").value,
+            url: document.querySelector("#url").value,
             key: document.querySelector("#key").value
         })
     }).then(function (response) {
