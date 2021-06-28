@@ -22,24 +22,24 @@ async function checkURL(URL) {
     let str = URL;
     let Expression = /http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/;
     let objExp = new RegExp(Expression);
-    if (objExp.test(str) == true) {
-        if (str[0] == 'h')
-            return true;
-        else
-            return false;
+    if (objExp.test(str) === true) {
+        return str[0] === 'h';
     } else {
         return false;
     }
 }
 
-async function save_url(URL) {
-    let random_key = await randomString()
+async function save_url(URL, key) {
+    let random_key = key;
+    if(key === ''){
+        random_key = await randomString()
+    }
     let is_exist = await LINKS.get(random_key)
     console.log(is_exist)
     if (is_exist == null)
         return await LINKS.put(random_key, URL), random_key
     else
-        save_url(URL)
+        save_url(URL,'')
 }
 
 async function handleRequest(request) {
@@ -56,7 +56,7 @@ async function handleRequest(request) {
                 },
             })
         }
-        let stat, random_key = await save_url(req["url"])
+        let stat, random_key = await save_url(req["url"], req["key"])
         console.log(stat)
         if (typeof (stat) == "undefined") {
             return new Response(`{"status":200,"key":"/` + random_key + `"}`, {
