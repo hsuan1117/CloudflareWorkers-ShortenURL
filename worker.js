@@ -8,7 +8,8 @@ const html404 = `<!DOCTYPE html>
 
 async function randomString(len) {
     len = len || 6;
-    let $chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678'; /****默认去掉了容易混淆的字符oOLl,9gq,Vv,Uu,I1****/
+    let $chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';
+    /****默认去掉了容易混淆的字符oOLl,9gq,Vv,Uu,I1****/
     let maxPos = $chars.length;
     let result = '';
     for (i = 0; i < len; i++) {
@@ -16,6 +17,7 @@ async function randomString(len) {
     }
     return result;
 }
+
 async function checkURL(URL) {
     let str = URL;
     let Expression = /http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/;
@@ -29,6 +31,7 @@ async function checkURL(URL) {
         return false;
     }
 }
+
 async function save_url(URL) {
     let random_key = await randomString()
     let is_exist = await LINKS.get(random_key)
@@ -38,6 +41,7 @@ async function save_url(URL) {
     else
         save_url(URL)
 }
+
 async function handleRequest(request) {
     console.log(request)
     if (request.method === "POST") {
@@ -54,7 +58,7 @@ async function handleRequest(request) {
         }
         let stat, random_key = await save_url(req["url"])
         console.log(stat)
-        if (typeof(stat) == "undefined") {
+        if (typeof (stat) == "undefined") {
             return new Response(`{"status":200,"key":"/` + random_key + `"}`, {
                 headers: {
                     "content-type": "text/html;charset=UTF-8",
@@ -112,7 +116,6 @@ async function handleRequest(request) {
         status: 404
     })
 }
-
 
 
 addEventListener("fetch", async event => {
