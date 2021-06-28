@@ -87,7 +87,7 @@ async function handleRequest(request) {
     console.log(path)
     if (!path) {
 
-        const html = await fetch("https://cdn.jsdelivr.net/gh/hsuan1117/CloudflareWorkers-ShortenURL@gh-pages/index.html")
+        const html = await fetch("https://cdn.jsdelivr.net/gh/hsuan1117/CloudflareWorkers-ShortenURL@main/index.html")
 
         return new Response(await html.text(), {
             headers: {
